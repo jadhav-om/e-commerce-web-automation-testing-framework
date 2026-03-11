@@ -14,6 +14,7 @@ jobs:
     timeout-minutes: 45
 
     env:
+      FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
       BASE_URL: ${{ secrets.BASE_URL }}
       HEADLESS: true
       STANDARD_USER: ${{ secrets.STANDARD_USER }}
@@ -43,6 +44,12 @@ jobs:
 
       - name: Run Playwright tests
         run: npm run test:ci
+
+      - name: Ensure artifact directories exist
+        if: always()
+        run: |
+          mkdir -p reports/html
+          mkdir -p reports/test-results
 
       - name: Upload HTML report
         if: always()
