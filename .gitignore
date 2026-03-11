@@ -1,0 +1,8 @@
+﻿node_modules/
+playwright-report/
+reports/html/
+reports/test-results/
+
+.env.local
+
+!reports/.gitkeep

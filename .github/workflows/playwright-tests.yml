@@ -1,0 +1,63 @@
+﻿name: Playwright UI Tests
+
+on:
+  push:
+    branches: [main, master]
+  pull_request:
+    branches: [main, master]
+  workflow_dispatch:
+
+jobs:
+  ui-tests:
+    name: Run UI Automation Suite
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+
+    env:
+      BASE_URL: ${{ secrets.BASE_URL }}
+      HEADLESS: true
+      STANDARD_USER: ${{ secrets.STANDARD_USER }}
+      LOCKED_OUT_USER: ${{ secrets.LOCKED_OUT_USER }}
+      PASSWORD: ${{ secrets.PASSWORD }}
+      INVALID_USER: ${{ secrets.INVALID_USER }}
+      INVALID_PASSWORD: ${{ secrets.INVALID_PASSWORD }}
+      FIRST_NAME: ${{ secrets.FIRST_NAME }}
+      LAST_NAME: ${{ secrets.LAST_NAME }}
+      POSTAL_CODE: ${{ secrets.POSTAL_CODE }}
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Install Playwright browsers
+        run: npx playwright install --with-deps chromium
+
+      - name: Run Playwright tests
+        run: npm run test:ci
+
+      - name: Upload HTML report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: playwright-html-report
+          path: reports/html
+          if-no-files-found: warn
+          retention-days: 14
+
+      - name: Upload test result artifacts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: playwright-test-results
+          path: reports/test-results
+          if-no-files-found: warn
+          retention-days: 14

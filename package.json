@@ -1,0 +1,17 @@
+﻿{
+  "name": "ecommerce-ui-automation-framework",
+  "version": "1.0.0",
+  "description": "Production-grade Playwright UI automation framework for an e-commerce application using POM.",
+  "private": true,
+  "scripts": {
+    "test": "playwright test -c config/playwright.config.js",
+    "test:headed": "playwright test -c config/playwright.config.js --headed",
+    "test:report": "playwright show-report reports/html",
+    "test:debug": "playwright test -c config/playwright.config.js --debug",
+    "test:ci": "playwright test -c config/playwright.config.js"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.52.0",
+    "dotenv": "^16.5.0"
+  }
+}
