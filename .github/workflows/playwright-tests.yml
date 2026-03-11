@@ -50,6 +50,7 @@ jobs:
         run: |
           mkdir -p reports/html
           mkdir -p reports/test-results
+          touch reports/test-results/.gitkeep
 
       - name: Upload HTML report
         if: always()
