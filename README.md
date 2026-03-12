@@ -154,6 +154,4 @@ The pipeline:
 - `npm run test:report`
 - `npm run test:ci`
 
-## Portfolio Readiness
 
-This repository is ready to push to GitHub and demonstrates a real-world SDET automation framework with maintainable architecture, CI integration, and test reporting.
